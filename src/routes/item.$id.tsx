@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lightbulb, ThumbsDown, ThumbsUp } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ItemActionButtons } from "@/components/wr/ItemActions";
@@ -44,7 +44,7 @@ function ItemDetail() {
   const failed = (ai.data && !ai.data.ok) || ai.isError;
   const summary = ai.data?.ok ? ai.data.text : templateSummary(item);
 
-  const details: [string, React.ReactNode][] = [
+  const details: [string, ReactNode][] = [
     ["Status", <StatusBadge key="s" status={item.status} />],
     ["Owner", item.owner],
     ["Waiting on", item.blockedBy ? `${item.blockedBy} · ${item.blockedSince}h` : "—"],

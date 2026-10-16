@@ -6,7 +6,7 @@ export function useAi(task: "brief" | "summary" | "answer", data: string, opts: 
   const fn = useServerFn(generateAi);
   return useQuery({
     queryKey: ["ai", task, data, opts.question ?? "", opts.nonce ?? 0],
-    queryFn: () => fn({ data: { task, data, question: opts.question } }),
+    queryFn: () => fn({ data: opts.question ? { task, data, question: opts.question } : { task, data } }),
     enabled: opts.enabled ?? true,
     staleTime: Infinity,
     retry: false,

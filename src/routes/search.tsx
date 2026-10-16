@@ -52,7 +52,7 @@ function SearchPage() {
   const results = useMemo(() => searchItems(items, query), [items, query]);
   const sources = useMemo(() => (asked ? sourcesForQuestion(items, asked) : []), [items, asked]);
   const data = useMemo(
-    () => JSON.stringify({ sources: compactItems(sources).map((s, n) => ({ n: n + 1, ...s, timeline: sources[n].timeline })) }),
+    () => JSON.stringify({ sources: compactItems(sources).map((s, n) => ({ n: n + 1, ...s, timeline: sources[n]!.timeline })) }),
     [sources],
   );
   const ai = useAi("answer", data, { question: asked, enabled: !!asked && sources.length > 0 });
@@ -119,7 +119,7 @@ function SearchPage() {
           ) : (
             <ul className="space-y-3">
               {filtered.map((r) => {
-                const last = r.timeline[r.timeline.length - 1];
+                const last = r.timeline[r.timeline.length - 1]!;
                 return (
                   <li key={r.id}>
                     <Link to="/item/$id" params={{ id: r.id }} className="card-surface block p-4 hover:border-primary">

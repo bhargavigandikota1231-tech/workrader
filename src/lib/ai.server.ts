@@ -2,7 +2,7 @@ const GATEWAY = "https://ai.gateway.lovable.dev/v1/responses";
 const MODEL = "openai/gpt-6-astra";
 
 export async function callGateway(instructions: string, input: string): Promise<string> {
-  const key = process.env.LOVABLE_API_KEY;
+  const key = process.env['LOVABLE_API_KEY'];
   if (!key) throw new Error("AI is not configured");
   const res = await fetch(GATEWAY, {
     method: "POST",

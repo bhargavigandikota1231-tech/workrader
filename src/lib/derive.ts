@@ -70,7 +70,7 @@ export function templateBrief(items: WorkItem[]) {
   parts.push(
     highRisk.length
       ? `${highRisk.length} high-severity item${highRisk.length > 1 ? "s are" : " is"} at risk today: ${highRisk.map((i) => `${i.title} (${i.id})`).join(", ")}.`
-      : `Top priority today is ${top[0].title} (${top[0].id}).`,
+      : `Top priority today is ${top[0]!.title} (${top[0]!.id}).`,
   );
   if (blocked[0])
     parts.push(
@@ -82,7 +82,7 @@ export function templateBrief(items: WorkItem[]) {
 
 export function templateSummary(i: WorkItem) {
   const blocked = i.blockedBy ? ` It has been waiting on ${i.blockedBy} for ${i.blockedSince}h.` : "";
-  const last = i.timeline[i.timeline.length - 1];
+  const last = i.timeline[i.timeline.length - 1]!;
   return `${i.id} — "${i.title}" — is a ${i.severity.toLowerCase()}-severity ${i.project} item owned by ${i.owner}, currently ${i.status.toLowerCase()} and due ${formatDue(i.due)}.${blocked} ${i.aiReason} Latest update (${last.source}): ${last.text}`;
 }
 
@@ -117,7 +117,7 @@ export function templateAnswer(q: string, sources: WorkItem[]) {
   if (!sources.length) return "I couldn't find anything in your team's data that answers this. Try a ticket ID, a teammate's name or a project.";
   const ql = q.toLowerCase();
   if (ql.includes("blocked")) {
-    const b = sources[0];
+    const b = sources[0]!;
     return `${b.owner} has been blocked the longest: ${b.blockedSince}h on ${b.id}, waiting on ${b.blockedBy} [1].` +
       (sources[1] ? ` Next is ${sources[1].owner} at ${sources[1].blockedSince}h on ${sources[1].id} [2].` : "");
   }
